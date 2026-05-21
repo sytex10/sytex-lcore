@@ -91,7 +91,7 @@ public sealed class OcrService : IDisposable
                 // 1. Windows.Media.Ocr (Yerleşik, Hızlı, Bağımsız)
                 if (SelectedEngine == "WindowsOCR")
                 {
-                    var blocks = await RunWindowsOcrAsync(bmp, exclusionZones, scanRegion);
+                    var blocks = await RunWindowsOcrAsync(bmp, exclusionZones, scanRegion, isDefaultScan);
                     return blocks;
                 }
 
@@ -196,7 +196,7 @@ public sealed class OcrService : IDisposable
         return list;
     }
 
-    private async Task<List<OcrBlock>> RunWindowsOcrAsync(Bitmap bmp, List<WpfRect> exclusionZones, WpfRect? scanRegion)
+    private async Task<List<OcrBlock>> RunWindowsOcrAsync(Bitmap bmp, List<WpfRect> exclusionZones, WpfRect? scanRegion, bool isDefaultScan)
     {
         var list = new List<OcrBlock>();
         try
@@ -212,7 +212,7 @@ public sealed class OcrService : IDisposable
             using var processedMat = new Mat();
             Bitmap processedBmp;
             
-            if (scanRegion != null)
+            if (!isDefaultScan)
             {
                 // Manuel seçim için: Ham gri tonlamalı 2x büyütülmüş resmi kullan.
                 // Windows OCR bu şekilde harika okur çünkü yapay kontrast germe yazıyı bozabilir.
@@ -280,7 +280,7 @@ public sealed class OcrService : IDisposable
                 text = CorrectGamingTerms(text);
                 
                 // Gürültü filtrelerini otomatik modda çalıştır, manuel modda esnet
-                if (scanRegion == null)
+                if (isDefaultScan)
                 {
                     if (text.Length < 3) continue;
                     if (System.Text.RegularExpressions.Regex.IsMatch(text, @"^\d+$")) continue;
