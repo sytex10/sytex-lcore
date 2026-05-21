@@ -1,0 +1,19 @@
+# .NET Core
+bin/
+obj/
+
+# Publish and Output
+publish/
+Output/
+*.exe
+*.dll
+*.pdb
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# OS generated files
+.DS_Store
+Thumbs.db

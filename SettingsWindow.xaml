@@ -1,0 +1,232 @@
+<Window x:Class="SytexLCore.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Height="720" Width="450"
+        Title="⚡ Premium Ayarlar">    <Window.Resources>
+        <!-- Siber & Pixel Art Tatlı Retro Tema Renkleri -->
+        <SolidColorBrush x:Key="BgDeep" Color="#110E18"/> <!-- Koyu Tatlı Menekşe -->
+        <SolidColorBrush x:Key="BgPanel" Color="#1B1527"/> <!-- Tatlı Mor Panel -->
+        <SolidColorBrush x:Key="BgInput" Color="#0B0912"/> <!-- Derin Giriş Kutusu -->
+        <SolidColorBrush x:Key="BorderNeon" Color="#00F0FF"/> <!-- Piksel Turkuaz -->
+        <SolidColorBrush x:Key="TextMain" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#9D8BB5"/>
+        <SolidColorBrush x:Key="AccentPink" Color="#FF007F"/> <!-- Piksel Neon Pembe -->
+
+        <!-- Premium Piksel Buton -->
+        <Style x:Key="PremiumBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#00F0FF"/>
+            <Setter Property="BorderBrush" Value="#00F0FF"/>
+            <Setter Property="BorderThickness" Value="2"/> <!-- Kalın Piksel Çerçeve -->
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#FF007F"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderBrush" Value="#FF007F"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Kısayol Tuş Butonu -->
+        <Style x:Key="HotkeyBtn" TargetType="Button">
+            <Setter Property="Background" Value="#0B0912"/>
+            <Setter Property="Foreground" Value="#FF007F"/>
+            <Setter Property="BorderBrush" Value="#00F0FF"/>
+            <Setter Property="BorderThickness" Value="2"/> <!-- Kalın Piksel Çerçeve -->
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="#FF007F"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF007F"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Ana Çift Piksel Çerçeve -->
+    <Border Background="{StaticResource BgDeep}"
+            BorderBrush="{StaticResource BorderNeon}"
+            BorderThickness="3"
+            CornerRadius="0"
+            MouseDown="Border_MouseDown">
+        <Border.Effect>
+            <DropShadowEffect Color="#00F0FF" BlurRadius="12" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
+
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Başlık -->
+                <RowDefinition Height="*"/>    <!-- İçerik -->
+                <RowDefinition Height="Auto"/> <!-- Butonlar -->
+            </Grid.RowDefinitions>
+
+            <!-- Başlık -->
+            <Grid Grid.Row="0" Margin="0,0,0,20">
+                <TextBlock Text="░▒▓ PREMIUM AYARLAR ▓▒░"
+                           Foreground="{StaticResource BorderNeon}"
+                           FontFamily="Consolas" FontSize="16" FontWeight="Bold"
+                           HorizontalAlignment="Center"/>
+            </Grid>
+
+            <!-- İçerik -->
+            <StackPanel Grid.Row="1">
+                
+                <!-- 1. GRUP: RENKLER -->
+                <Border BorderBrush="#1E293B" BorderThickness="1" Padding="14" Background="{StaticResource BgPanel}" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="🎨 BALON VE YAZI RENKLERİ" Foreground="{StaticResource BorderNeon}" FontFamily="Consolas" FontSize="12" FontWeight="Bold" Margin="0,0,0,12"/>
+                        
+                        <!-- Balon Arka Plan Rengi -->
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Balon Arka Plan:" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" FontSize="12"/>
+                            <TextBox Grid.Column="1" x:Name="BgColorBox" TextChanged="ColorBox_TextChanged" Background="{StaticResource BgInput}" Foreground="White" BorderBrush="#334155" Padding="6,4" FontFamily="Consolas"/>
+                            <Button Grid.Column="2" Content="Seç" Margin="6,0,0,0" Width="50" Height="26" Click="SelectBgColor_Click" Style="{StaticResource PremiumBtn}" FontFamily="Segoe UI" FontSize="11"/>
+                        </Grid>
+
+                        <!-- Balon Yazı Rengi -->
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Balon Yazı Rengi:" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" FontSize="12"/>
+                            <TextBox Grid.Column="1" x:Name="TextColorBox" TextChanged="ColorBox_TextChanged" Background="{StaticResource BgInput}" Foreground="White" BorderBrush="#334155" Padding="6,4" FontFamily="Consolas"/>
+                            <Button Grid.Column="2" Content="Seç" Margin="6,0,0,0" Width="50" Height="26" Click="SelectTextColor_Click" Style="{StaticResource PremiumBtn}" FontFamily="Segoe UI" FontSize="11"/>
+                        </Grid>
+
+                        <!-- Balon Çerçeve Rengi -->
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Balon Çerçeve Rengi:" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" FontSize="12"/>
+                            <TextBox Grid.Column="1" x:Name="BorderColorBox" TextChanged="ColorBox_TextChanged" Background="{StaticResource BgInput}" Foreground="White" BorderBrush="#334155" Padding="6,4" FontFamily="Consolas"/>
+                            <Button Grid.Column="2" Content="Seç" Margin="6,0,0,0" Width="50" Height="26" Click="SelectBorderColor_Click" Style="{StaticResource PremiumBtn}" FontFamily="Segoe UI" FontSize="11"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,10">
+                            <Button Content="Varsayılan Renklere Dön" Click="ResetColors_Click" Background="Transparent" BorderThickness="0" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Right" Cursor="Hand" FontSize="11" FontFamily="Consolas">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="#00F5FF"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+
+                        <!-- Canlı Örnek Balon Önizleme -->
+                        <Border x:Name="PreviewBubbleBorder" BorderBrush="#00F5FF" BorderThickness="1" CornerRadius="0" Padding="12,8" Background="#0A0D17">
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="PreviewBubbleGlow" Color="#00F5FF" BlurRadius="8" ShadowDepth="0" Opacity="0.4"/>
+                            </Border.Effect>
+                            <StackPanel>
+                                <TextBlock Text="⚡ ÖRNEK ÖNİZLEME BALONU" x:Name="PreviewBubbleHeader" Foreground="#00F5FF" FontSize="9" FontFamily="Consolas" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="Bu parlayan kutu, oyundaki canlı çeviri balonunuzun nasıl görüneceğini temsil eder!" x:Name="PreviewBubbleText" Foreground="White" FontFamily="Segoe UI Semibold" FontSize="11" TextWrapping="Wrap"/>
+                                <TextBlock Text="This glowing box represents how your live translation bubble will look!" x:Name="PreviewBubbleMutedText" Foreground="#8A9BB5" FontFamily="Segoe UI" FontSize="9" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- 2. GRUP: KISAYOLLAR -->
+                <Border BorderBrush="#1E293B" BorderThickness="1" Padding="14" Background="{StaticResource BgPanel}">
+                    <StackPanel>
+                        <TextBlock Text="⌨ GLOBAL KISAYOLLAR (HOTKEYS)" Foreground="{StaticResource BorderNeon}" FontFamily="Consolas" FontSize="12" FontWeight="Bold" Margin="0,0,0,12"/>
+                        <TextBlock Text="Tuş atamak için butona tıklayıp klavyeden bir tuşa basın." Foreground="{StaticResource TextMuted}" FontSize="10" Margin="0,0,0,12" TextWrapping="Wrap"/>
+
+                        <!-- Manuel Çeviri Kısayolu -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Manuel Çeviri:" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" FontSize="12"/>
+                            <Button Grid.Column="1" x:Name="ManuelHotkeyBtn" Click="CaptureHotkey_Click" Style="{StaticResource HotkeyBtn}" Tag="Manuel" Content="F9"/>
+                        </Grid>
+
+                        <!-- Otomatik Çeviri Kısayolu -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Otomatik Çeviri:" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" FontSize="12"/>
+                            <Button Grid.Column="1" x:Name="AutoHotkeyBtn" Click="CaptureHotkey_Click" Style="{StaticResource HotkeyBtn}" Tag="Auto" Content="F10"/>
+                        </Grid>
+
+                        <!-- Ayarlar Kısayolu -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Ayarlar Menüsü:" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" FontSize="12"/>
+                            <Button Grid.Column="1" x:Name="SettingsHotkeyBtn" Click="CaptureHotkey_Click" Style="{StaticResource HotkeyBtn}" Tag="Settings" Content="F11"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 3. GRUP: UYGULAMA AYARLARI -->
+                <Border BorderBrush="#1E293B" BorderThickness="1" Padding="14" Background="{StaticResource BgPanel}" Margin="0,16,0,0">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ UYGULAMA AYARLARI" Foreground="{StaticResource BorderNeon}" FontFamily="Consolas" FontSize="12" FontWeight="Bold" Margin="0,0,0,12"/>
+                        <CheckBox x:Name="MinimizeOnCloseCheck" Content="Kapatma Tuşuna Basınca Sistem Tepsisine (Tray) Küçült" Foreground="{StaticResource TextMain}" FontFamily="Consolas" FontSize="11" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Alt Kaydet ve Kapat Butonu -->
+            <Grid Grid.Row="2" Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="KAYDET VE KAPAT" Click="SaveClose_Click" Style="{StaticResource PremiumBtn}" Height="40"/>
+                <Button Grid.Column="2" Content="İPTAL" Click="Cancel_Click" Style="{StaticResource PremiumBtn}" BorderBrush="#334155" Foreground="{StaticResource TextMuted}" Height="40"/>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

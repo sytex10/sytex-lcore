@@ -1,0 +1,134 @@
+<Window x:Class="SytexLCore.MiniMenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Topmost="True" ShowInTaskbar="False"
+        Height="46" Width="240"
+        WindowStartupLocation="Manual" Left="20" Top="20"
+        Title="SYTEX Mini Menu">
+
+    <Window.Resources>
+        <!-- Siber & Pixel Art Retro Renkler -->
+        <SolidColorBrush x:Key="BgBrush" Color="#EE110E18"/> <!-- Yarı Şeffaf Tatlı Menekşe -->
+        <SolidColorBrush x:Key="BorderCyan" Color="#00F0FF"/> <!-- Piksel Siyan -->
+        <SolidColorBrush x:Key="GlowGreen" Color="#32CD32"/> <!-- Piksel Yeşil -->
+        <SolidColorBrush x:Key="GlowRed" Color="#FF007F"/> <!-- Piksel Pembe -->
+        <SolidColorBrush x:Key="TextMuted" Color="#9D8BB5"/>
+
+        <!-- Mini Piksel Buton Stili -->
+        <Style x:Key="MiniBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#00F0FF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="Width" Value="32"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Margin" Value="4,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="BtnBorder" Background="{TemplateBinding Background}" CornerRadius="0" BorderThickness="2" BorderBrush="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BtnBorder" Property="Background" Value="#FF007F"/>
+                                <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#FF007F"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- En dış siber piksel-glow çerçeve -->
+    <Border Background="{StaticResource BgBrush}"
+            BorderBrush="{StaticResource BorderCyan}"
+            BorderThickness="3"
+            CornerRadius="0"
+            MouseDown="Border_MouseDown">
+        <Border.Effect>
+            <DropShadowEffect Color="#00F0FF" BlurRadius="12" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
+
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="6,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/> <!-- Drag Bar -->
+                <ColumnDefinition Width="*"/>    <!-- Butonlar -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Sol tarafta mini siber çizgili tutma alanı (Drag Handle) -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,8,0" Cursor="SizeAll">
+                <Rectangle Width="2" Height="20" Fill="#00F5FF" Margin="1,0"/>
+                <Rectangle Width="2" Height="20" Fill="#00F5FF" Margin="1,0"/>
+            </StackPanel>
+
+            <!-- Kontrol Butonları -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                
+                <!-- [●] Otomatik Başlat / Durdur -->
+                <Button x:Name="AutoBtn" Click="AutoBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Otomatik Çeviri Aç/Kapa">
+                    <Grid>
+                        <!-- Glow Dot -->
+                        <Border x:Name="StatusDot" Width="10" Height="10" CornerRadius="5" Background="#FF0055" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="DotGlow" Color="#FF0055" BlurRadius="6" ShadowDepth="0"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                </Button>
+
+                <!-- [⛶] Manuel Alan Yakala -->
+                <Button Click="ManualBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Manuel Bölge Çevirisi (Kırpıcı)">
+                    <TextBlock Text="⛶" FontSize="15" FontWeight="Bold" Foreground="#00F5FF"/>
+                </Button>
+
+                <!-- [⚙] Ayarlar / Main Restore (Dönen Cyber Dişli Animasyonu) -->
+                <Button Click="SettingsBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Ayarlar &amp; Ana Kontrol Paneli">
+                    <TextBlock Text="⚙" FontSize="16" Foreground="#00F5FF" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.RenderTransform>
+                            <RotateTransform Angle="0"/>
+                        </TextBlock.RenderTransform>
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0.2"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Button>
+
+                <!-- [🗕] Arka plana / Tray'e Küçült -->
+                <Button Click="TrayBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Tray'e Küçült">
+                    <TextBlock Text="🗕" FontSize="12" Foreground="#8A9BB5" FontWeight="Bold"/>
+                </Button>
+
+                <!-- [✕] Kapat -->
+                <Button Click="CloseBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Tamamen Kapat">
+                    <TextBlock Text="✕" FontSize="14" Foreground="#FF0055" FontWeight="Bold"/>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

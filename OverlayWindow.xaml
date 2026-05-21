@@ -1,0 +1,13 @@
+<Window x:Class="SytexLCore.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        Topmost="True" ShowInTaskbar="False" IsHitTestVisible="False"
+        WindowState="Maximized"
+        Title="SYTEX Overlay">
+
+    <Grid x:Name="RootGrid">
+        <!-- Çeviri kutularının render edildiği canvas — tıklamalar oyuna geçer -->
+        <Canvas x:Name="TranslationCanvas" IsHitTestVisible="False"/>
+    </Grid>
+</Window>
