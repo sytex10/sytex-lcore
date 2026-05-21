@@ -361,12 +361,24 @@ public sealed class OcrService : IDisposable
 
     private static Bitmap CaptureScreen(WpfRect? region)
     {
+        double dpiScaleX = 1.0;
+        double dpiScaleY = 1.0;
+        try
+        {
+            using var g_dpi = Graphics.FromHwnd(IntPtr.Zero);
+            dpiScaleX = g_dpi.DpiX / 96.0;
+            dpiScaleY = g_dpi.DpiY / 96.0;
+        }
+        catch { }
+
         int sw = GetSystemMetrics(0), sh = GetSystemMetrics(1);
         int x = 0, y = 0, w = sw, h = sh;
         if (region.HasValue)
         {
-            x = (int)region.Value.X; y = (int)region.Value.Y;
-            w = (int)region.Value.Width; h = (int)region.Value.Height;
+            x = (int)(region.Value.X * dpiScaleX);
+            y = (int)(region.Value.Y * dpiScaleY);
+            w = (int)(region.Value.Width * dpiScaleX);
+            h = (int)(region.Value.Height * dpiScaleY);
         }
         if (w <= 0 || h <= 0) return null!;
         var bmp = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
