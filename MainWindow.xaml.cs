@@ -308,7 +308,14 @@ public partial class MainWindow : Window
             if (cropper.SelectedRegion != WpfRect.Empty && _currentProfile != null)
             {
                 var reg = cropper.SelectedRegion;
-                
+
+                // Güvenlik Kontrolü: Çok küçük seçimler (yanlış tık) filtrele
+                if (reg.Width < 20 || reg.Height < 20)
+                {
+                    Log("[WARNING] Seçim alanı çok küçük, işlem iptal edildi.");
+                    goto done;
+                }
+
                 // Güvenlik Payı (Padding): Sol ve sağdan 50px, üst ve alttan 15px ekstra tarama payı ekle!
                 // Böylece altyazının kenarlarda kesilmesini (örn: Atreus -> treus, sometimes -> om times) tamamen engelle!
                 double padX = 50;
@@ -323,11 +330,15 @@ public partial class MainWindow : Window
                 Log($"[MANUEL] Yeni OCR bölgesi ayarlandı: X:{newX:0}, Y:{newY:0}, G:{newW:0}, Y:{newH:0}");
                 await _profileSvc.SaveAsync(_currentProfile);
 
+                // Seçim penceresinin tamamen kapanması ve ekranın yenilenmesi için bekle
+                await Task.Delay(400);
+
                 // Çeviri Balonunu (Floating Bubble) hemen seçilen alanın üstünde göster!
                 var bubble = new TranslationBubbleWindow(reg, _currentProfile, _translator);
                 bubble.Show();
             }
 
+            done:
             if (overlayWasRunning)
             {
                 StartOverlay();
@@ -343,7 +354,8 @@ public partial class MainWindow : Window
                 }
             }
         };
-        cropper.ShowDialog();
+        cropper.Show();
+        cropper.Activate();
     }
 
     private void CreateMiniMenu()

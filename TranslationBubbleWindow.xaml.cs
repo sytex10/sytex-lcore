@@ -43,14 +43,22 @@ public partial class TranslationBubbleWindow : Window
             fadeIn.Begin(this);
         }
 
-        // Ekranın güncellenmesi ve kararma efektinin (CropWindow) kaybolması için 150ms bekle!
-        // Aksi takdirde karartılmış ekranın ekran görüntüsünü alıp OCR yapmaya çalışırız ve yazı okunamaz!
-        await Task.Delay(150);
+        // Ekranın güncellenmesi ve kararma efektinin (CropWindow) kaybolması için 400ms bekle!
+        // 150ms yetmiyordu — seçim çerçevesi ekran görüntüsüne girip OCR'ı yanıltıyordu!
+        await Task.Delay(400);
 
         // 2. OCR ve Çeviriyi arka planda başlat
         try
         {
             var blocks = await _ocr.RecognizeAsync(new List<WpfRect>(), _region);
+            
+            // İlk deneme boş dönerse 600ms bekleyip tekrar dene (ekran tam temizlenmemiş olabilir)
+            if (blocks == null || blocks.Count == 0)
+            {
+                await Task.Delay(600);
+                blocks = await _ocr.RecognizeAsync(new List<WpfRect>(), _region);
+            }
+
             if (blocks == null || blocks.Count == 0)
             {
                 ShowText("Metin bulunamadı.", "Seçilen alanda herhangi bir yazı tespit edilemedi.");
