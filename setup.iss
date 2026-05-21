@@ -3,7 +3,7 @@
 ; ═══════════════════════════════════════════════════════════════════
 
 #define MyAppName    "SYTEX L-Core"
-#define MyAppVersion "2.0.0"
+#define MyAppVersion "Beta"
 #define MyAppPublisher "SYTEX"
 #define MyAppExeName "SYTEX-LCore.exe"
 #define MySourceDir  "C:\Users\mamo1\.gemini\antigravity\scratch\SYTEX-LCore-CS\bin\Release\net8.0-windows10.0.19041.0\win-x64\publish"
@@ -103,15 +103,19 @@ begin
 end;
 
 procedure CurPageChanged(CurPageID: Integer);
+var
+  I: Integer;
 begin
-  // Her sayfa geçişinde ana formu karartıyoruz
   WizardForm.Color := DARK_BG;
-
+  WizardForm.InnerPage.Color := DARK_BG;
+  
   if CurPageID = wpFinished then
   begin
     WizardForm.FinishedHeadingLabel.Font.Color := NEON_CYAN;
     WizardForm.FinishedLabel.Font.Color := TEXT_WHITE;
     WizardForm.RunList.Color := DARK_BG;
     WizardForm.RunList.Font.Color := TEXT_WHITE;
+    for I := 0 to WizardForm.RunList.Items.Count - 1 do
+      WizardForm.RunList.ItemEnabled[I] := True;
   end;
 end;

@@ -1,43 +1,45 @@
 <Window x:Class="SytexLCore.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="░▒▓ SYTEX L-CORE ULTIMATE ▓▒░" Height="620" Width="950"
+        Title="SYTEX L-CORE" Height="640" Width="980"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent"
         Closing="Window_Closing" Loaded="Window_Loaded">
 
     <Window.Resources>
-        <!-- Siber & Pixel Art Tatlı Retro Tema Renkleri -->
-        <SolidColorBrush x:Key="BgDeep"       Color="#110E18"/> <!-- Koyu Tatlı Menekşe -->
-        <SolidColorBrush x:Key="BgCard"       Color="#1B1527"/> <!-- Tatlı Mor Kart -->
-        <SolidColorBrush x:Key="BgInput"      Color="#0B0912"/> <!-- Derin Retro Giriş -->
-        <SolidColorBrush x:Key="BorderCyan"   Color="#00F0FF"/> <!-- Piksel Turkuaz -->
-        <SolidColorBrush x:Key="TextMain"     Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="TextMuted"    Color="#9D8BB5"/>
-        <SolidColorBrush x:Key="AccentPink"   Color="#FF007F"/> <!-- Piksel Neon Pembe -->
-        <SolidColorBrush x:Key="GlowGreen"    Color="#32CD32"/> <!-- Retro Lime Yeşil -->
+        <!-- Web Sitesi İle Birebir Uyumlu Renkler -->
+        <SolidColorBrush x:Key="BgDeep"     Color="#0E1118"/>
+        <SolidColorBrush x:Key="BgCard"     Color="#1A1523"/>
+        <SolidColorBrush x:Key="BgInput"    Color="#110E18"/>
+        <SolidColorBrush x:Key="BorderCyan" Color="#00F0FF"/>
+        <SolidColorBrush x:Key="AccentPink" Color="#FF007F"/>
+        <SolidColorBrush x:Key="TextMain"   Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TextMuted"  Color="#B58B9D"/>
+        <SolidColorBrush x:Key="GlowGreen"  Color="#00FF66"/>
 
-        <!-- Premium Siber & Piksel Buton -->
+        <!-- Pixel Art Buton Stili -->
         <Style x:Key="CyberBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#00F0FF"/>
             <Setter Property="BorderBrush" Value="#00F0FF"/>
-            <Setter Property="BorderThickness" Value="2"/> <!-- Kalın Piksel Çerçeve -->
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="FontFamily" Value="Consolas"/>
-            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="42"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#FF007F"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#FF007F"/>
                                 <Setter Property="Foreground" Value="White"/>
                                 <Setter Property="BorderBrush" Value="#FF007F"/>
                             </Trigger>
@@ -47,19 +49,42 @@
             </Setter>
         </Style>
 
-        <!-- Modern Siber ComboBox -->
+        <Style x:Key="StartBtn" TargetType="Button" BasedOn="{StaticResource CyberBtn}">
+            <Setter Property="BorderBrush" Value="#00FF66"/>
+            <Setter Property="Foreground" Value="#00FF66"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#00FF66"/>
+                                <Setter Property="Foreground" Value="#0E1118"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ComboBox Stili -->
         <Style TargetType="ComboBox">
-            <Setter Property="Background"      Value="#0B0912"/>
-            <Setter Property="Foreground"      Value="#FFFFFF"/>
-            <Setter Property="BorderBrush"     Value="#FF007F"/>
+            <Setter Property="Background" Value="#110E18"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FF007F"/>
             <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="FontFamily"      Value="Consolas"/>
-            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBox">
                         <Grid>
-                            <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0"/>
+                            <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
                             <ToggleButton x:Name="ToggleButton" Focusable="false" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press" Background="Transparent" BorderThickness="0">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
@@ -69,11 +94,11 @@
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
-                            <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="12,8,25,8" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Content="{TemplateBinding SelectionBoxItem}" Margin="12,8,25,8" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
-                                <Border x:Name="DropDownBorder" Background="#0B0912" BorderThickness="2" BorderBrush="#00F0FF" CornerRadius="0" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="DropDownBorder" Background="#110E18" BorderThickness="2" BorderBrush="#00F0FF" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                     <ScrollViewer Margin="2" SnapsToDevicePixels="True">
-                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
                                     </ScrollViewer>
                                 </Border>
                             </Popup>
@@ -84,22 +109,23 @@
         </Style>
 
         <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="#0B0912"/>
+            <Setter Property="Background" Value="#110E18"/>
             <Setter Property="Foreground" Value="#FFFFFF"/>
             <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBoxItem">
-                        <Border x:Name="Bg" Background="{TemplateBinding Background}" CornerRadius="0" Margin="1">
+                        <Border x:Name="Bg" Background="{TemplateBinding Background}" Margin="1">
                             <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bg" Property="Background" Value="#1B1527"/>
+                                <Setter TargetName="Bg" Property="Background" Value="#1A1523"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Bg" Property="Background" Value="#00F0FF"/>
-                                <Setter Property="Foreground" Value="#110E18"/>
+                                <Setter Property="Foreground" Value="#0E1118"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -108,37 +134,46 @@
         </Style>
     </Window.Resources>
 
-    <!-- Dış Siber Piksel Çift kenarlık çerçevesi -->
-    <Border CornerRadius="0" Background="{StaticResource BgDeep}"
-            BorderBrush="{StaticResource BorderCyan}" BorderThickness="3">
+    <!-- Ana Dış Çerçeve: Web Sitesiyle Birebir Aynı Neon Cyan Glow -->
+    <Border Background="{StaticResource BgDeep}" BorderBrush="#00F0FF" BorderThickness="3">
         <Border.Effect>
-            <DropShadowEffect Color="#00F0FF" BlurRadius="12" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect Color="#00F0FF" BlurRadius="18" ShadowDepth="0" Opacity="0.4"/>
         </Border.Effect>
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="52"/>  <!-- Başlık -->
+                <RowDefinition Height="*"/>   <!-- İçerik -->
+                <RowDefinition Height="52"/>  <!-- Alt Bar -->
             </Grid.RowDefinitions>
 
-            <!-- ── BAŞLIK ÇUBUĞU ─────────────────────────────────────────── -->
-            <Border Grid.Row="0" BorderBrush="#FF007F" BorderThickness="0,0,0,3"
-                    MouseDown="TitleBar_MouseDown" Background="Transparent">
-                <Grid Margin="18,0,12,0">
+            <!-- ══ BAŞLIK ÇUBUĞU ══════════════════════════════════════════════ -->
+            <Border Grid.Row="0" Background="#1A1523" BorderBrush="#FF007F" BorderThickness="0,0,0,2" MouseDown="TitleBar_MouseDown">
+                <Grid Margin="16,0,10,0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="TitleLabel" Text="👾 SYTEX L-CORE ULTIMATE 🕹" Foreground="#00F0FF" FontFamily="Consolas" FontSize="14" FontWeight="Bold"/>
+                        <!-- Neon Kutu Logo -->
+                        <Border BorderBrush="#00F0FF" BorderThickness="2" Padding="6,2" Margin="0,0,12,0">
+                            <TextBlock Text="SX" Foreground="#00F0FF" FontFamily="Consolas" FontSize="13" FontWeight="Bold"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock x:Name="TitleLabel" Text="SYTEX L-CORE" Foreground="#FFFFFF" FontFamily="Consolas" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="ULTIMATE GAME TRANSLATOR" Foreground="#B58B9D" FontFamily="Consolas" FontSize="9"/>
+                        </StackPanel>
+                        <!-- BETA Etiketi -->
+                        <Border Background="#FF007F" Padding="6,2" Margin="10,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="PUBLIC BETA" Foreground="White" FontFamily="Consolas" FontSize="9" FontWeight="Bold"/>
+                        </Border>
                     </StackPanel>
 
+                    <!-- Sağ: Dil Geçiş + Pencere Butonları -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <!-- Dil Geçiş Butonu -->
-                        <Button x:Name="LangToggleBtn" Content="🌐 TR" Width="55" Height="30" Background="#1B1527" Foreground="#00F0FF" BorderBrush="#00F0FF" BorderThickness="1" Click="LangToggleBtn_Click" Cursor="Hand" FontFamily="Consolas" FontSize="11" FontWeight="Bold" Margin="0,0,6,0">
+                        <Button x:Name="LangToggleBtn" Content="🌐 TR" Width="52" Height="28" Background="#1A1523" Foreground="#00F0FF" BorderBrush="#00F0FF" BorderThickness="1" Click="LangToggleBtn_Click" Cursor="Hand" FontFamily="Consolas" FontSize="10" FontWeight="Bold" Margin="0,0,8,0">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
+                                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                             </ControlTemplate>
@@ -147,14 +182,13 @@
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Background" Value="#00F0FF"/>
-                                            <Setter Property="Foreground" Value="#110E18"/>
+                                            <Setter Property="Foreground" Value="#0E1118"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <!-- Küçült -->
-                        <Button Content="—" Width="38" Height="38" Background="Transparent" Foreground="{StaticResource TextMuted}" BorderThickness="0" Click="MinimizeBtn_Click" Cursor="Hand" FontFamily="Consolas" FontSize="14">
+                        <Button Content="—" Width="36" Height="36" Background="Transparent" Foreground="#B58B9D" BorderThickness="0" Click="MinimizeBtn_Click" Cursor="Hand" FontFamily="Consolas" FontSize="14">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Style.Triggers>
@@ -165,8 +199,7 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <!-- Kapat -->
-                        <Button Content="✕" Width="38" Height="38" Background="Transparent" Foreground="{StaticResource TextMuted}" BorderThickness="0" Click="CloseBtn_Click" Cursor="Hand" FontFamily="Consolas" FontSize="14">
+                        <Button Content="✕" Width="36" Height="36" Background="Transparent" Foreground="#B58B9D" BorderThickness="0" Click="CloseBtn_Click" Cursor="Hand" FontFamily="Consolas" FontSize="14">
                             <Button.Style>
                                 <Style TargetType="Button">
                                     <Style.Triggers>
@@ -181,112 +214,106 @@
                 </Grid>
             </Border>
 
-            <!-- ── ORTA ÇİFT KOLONLU PREMIUM ALAN ────────────────────────── -->
-            <Grid Grid.Row="1" Margin="20">
+            <!-- ══ ORTA: İKİ KOLON İÇERİK ═══════════════════════════════════ -->
+            <Grid Grid.Row="1" Margin="20,16,20,16">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.1*"/> <!-- Sol Panel (Control) -->
-                    <ColumnDefinition Width="20"/>    <!-- Separator -->
-                    <ColumnDefinition Width="0.9*"/> <!-- Sağ Panel (Terminal Son Çeviriler) -->
+                    <ColumnDefinition Width="1.1*"/>
+                    <ColumnDefinition Width="18"/>
+                    <ColumnDefinition Width="0.9*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- ── SOL PANEL: KONTROLLER ── -->
-                <Border Grid.Column="0" BorderBrush="#FF007F" BorderThickness="3" Background="{StaticResource BgCard}" Padding="18">
+                <!-- ── SOL PANEL ── -->
+                <Border Grid.Column="0" Background="#1A1523" BorderBrush="#FF007F" BorderThickness="3" Padding="18,16">
                     <StackPanel>
-                        <!-- Dinamik Oyun Kartı / Logo Kutusu -->
-                        <Border BorderBrush="#00F0FF" BorderThickness="2" Margin="0,0,0,16" Background="#0B0912" Padding="12,6" HorizontalAlignment="Center" Width="260" Height="84">
+
+                        <!-- Oyun Kartı -->
+                        <Border BorderBrush="#00F0FF" BorderThickness="2" Background="#110E18" Padding="10,6" Margin="0,0,0,16" HorizontalAlignment="Stretch" Height="80">
                             <Grid x:Name="GameCardGrid">
-                                <!-- Varsayılan Uygulama Logosu -->
                                 <Image x:Name="DefaultLogoImage" Source="Sytex L-Core Logo.png" Stretch="Uniform" Visibility="Visible"/>
-                                
-                                <!-- Dinamik Algılanan Oyun Detayı (Başlangıçta Gizli) -->
                                 <Grid x:Name="DetectedGamePanel" Visibility="Collapsed">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <!-- Oyun İkonu (Process'ten dinamik çekilen) -->
-                                    <Image x:Name="GameIconImage" Width="48" Height="48" Margin="0,0,12,0" Stretch="Uniform" VerticalAlignment="Center"/>
-                                    <!-- Oyun Adı -->
+                                    <Image x:Name="GameIconImage" Width="46" Height="46" Margin="0,0,12,0" Stretch="Uniform" VerticalAlignment="Center"/>
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="👾 OYUN AKTİF" Foreground="#FF007F" FontFamily="Consolas" FontSize="10" FontWeight="Bold" Margin="0,0,0,2"/>
-                                        <TextBlock x:Name="GameTitleLabel" Text="Bekleniyor..." Foreground="#FFFFFF" FontFamily="Consolas" FontSize="12" FontWeight="Bold" TextWrapping="Wrap" MaxHeight="42" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="⚡ OYUN AKTİF" Foreground="#FF007F" FontFamily="Consolas" FontSize="9" FontWeight="Bold" Margin="0,0,0,3"/>
+                                        <TextBlock x:Name="GameTitleLabel" Text="Bekleniyor..." Foreground="#FFFFFF" FontFamily="Consolas" FontSize="12" FontWeight="Bold" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxHeight="40"/>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
                         </Border>
 
-                        <!-- Başlık -->
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                            <TextBlock x:Name="ControlPanelLabel" Text="🕹 KONTROL PANELİ" Foreground="{StaticResource BorderCyan}" FontFamily="Consolas" FontSize="13" FontWeight="Bold"/>
+                        <!-- Bölüm Başlığı -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <Border Background="#FF007F" Width="3" Margin="0,0,8,0"/>
+                            <TextBlock x:Name="ControlPanelLabel" Text="KONTROL PANELİ" Foreground="#00F0FF" FontFamily="Consolas" FontSize="12" FontWeight="Bold"/>
                         </StackPanel>
 
-                        <!-- Aktif Oyun Algılayıcı -->
-                        <StackPanel Margin="0,0,0,12">
-                            <TextBlock x:Name="DetectedGameLabel" Text="👾 Algılanan Oyun:" Foreground="{StaticResource TextMuted}" FontSize="12" FontFamily="Consolas" Margin="0,0,0,6"/>
-                            <TextBox x:Name="GameNameBox" IsReadOnly="True" Background="{StaticResource BgInput}" Foreground="White" BorderBrush="#FF007F" BorderThickness="2" Padding="10,8" FontFamily="Consolas" Text="Bekleniyor..." FontWeight="Bold"/>
+                        <!-- Algılanan Oyun -->
+                        <StackPanel Margin="0,0,0,10">
+                            <TextBlock x:Name="DetectedGameLabel" Text="► Algılanan Oyun" Foreground="#B58B9D" FontSize="11" FontFamily="Consolas" Margin="0,0,0,5"/>
+                            <TextBox x:Name="GameNameBox" IsReadOnly="True" Background="#110E18" Foreground="#00F0FF" BorderBrush="#FF007F" BorderThickness="2" Padding="10,7" FontFamily="Consolas" Text="Bekleniyor..." FontWeight="Bold" FontSize="12"/>
                         </StackPanel>
 
-                        <!-- Büyük Başlat Butonu -->
-                        <Button x:Name="StartBtn" Click="StartBtn_Click" Style="{StaticResource CyberBtn}" Height="50" Margin="0,0,0,10" BorderBrush="{StaticResource GlowGreen}" Foreground="{StaticResource GlowGreen}">
+                        <!-- Ana Başlat Butonu -->
+                        <Button x:Name="StartBtn" Click="StartBtn_Click" Style="{StaticResource StartBtn}" Margin="0,0,0,8">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="▶ " FontSize="14" VerticalAlignment="Center" FontFamily="Consolas"/>
+                                <TextBlock Text="▶  " FontSize="14" VerticalAlignment="Center" FontFamily="Consolas"/>
                                 <TextBlock x:Name="StartBtnLabel" Text="ÇEVİRİYİ BAŞLAT" FontFamily="Consolas" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
 
-                        <!-- Borderless Zorla Butonu -->
-                        <Button Click="BorderlessBtn_Click" Style="{StaticResource CyberBtn}" Margin="0,0,0,10">
+                        <!-- Borderless -->
+                        <Button Click="BorderlessBtn_Click" Style="{StaticResource CyberBtn}" Margin="0,0,0,8">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="🖥 " VerticalAlignment="Center"/>
-                                <TextBlock x:Name="BorderlessBtnLabel" Text="Borderless (Penceresiz) Zorla" VerticalAlignment="Center"/>
+                                <TextBlock Text="🖥  " VerticalAlignment="Center"/>
+                                <TextBlock x:Name="BorderlessBtnLabel" Text="Borderless Zorla" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
 
-                        <!-- Ayarlar Penceresi Butonu -->
-                        <Button Click="OpenSettings_Click" Style="{StaticResource CyberBtn}" Margin="0,0,0,10">
+                        <!-- Ayarlar -->
+                        <Button Click="OpenSettings_Click" Style="{StaticResource CyberBtn}" Margin="0,0,0,14">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="⚙ " VerticalAlignment="Center"/>
-                                <TextBlock x:Name="SettingsBtnLabel" Text="Gelişmiş Ayarlar Menüsü" VerticalAlignment="Center"/>
+                                <TextBlock Text="⚙  " VerticalAlignment="Center"/>
+                                <TextBlock x:Name="SettingsBtnLabel" Text="Gelişmiş Ayarlar" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
 
-                        <!-- Çeviri Motoru & Sayaç Bilgisi -->
-                        <Border BorderBrush="#FF007F" BorderThickness="2" Background="{StaticResource BgInput}" Padding="10" Margin="0,6,0,0">
+                        <!-- Bilgi Kutusu -->
+                        <Border BorderBrush="#00F0FF" BorderThickness="2" Background="#110E18" Padding="12,10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel>
-                                    <TextBlock x:Name="EngineLabel" Text="Çeviri Motoru: Google GTX" Foreground="{StaticResource TextMuted}" FontSize="11" FontFamily="Consolas"/>
-                                    <TextBlock x:Name="OcrLabel" Text="OCR Motoru: Windows OCR" Foreground="{StaticResource TextMuted}" FontSize="11" FontFamily="Consolas" Margin="0,2,0,0"/>
+                                    <TextBlock x:Name="EngineLabel" Text="Çeviri: Google GTX" Foreground="#B58B9D" FontSize="10" FontFamily="Consolas"/>
+                                    <TextBlock x:Name="OcrLabel" Text="OCR: Windows OCR" Foreground="#B58B9D" FontSize="10" FontFamily="Consolas" Margin="0,3,0,0"/>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                    <TextBlock x:Name="TotalTranslationsLabel" Text="Toplam Çeviri: 0" Foreground="{StaticResource BorderCyan}" FontSize="11" FontFamily="Consolas" FontWeight="Bold"/>
-                                </StackPanel>
+                                <TextBlock x:Name="TotalTranslationsLabel" Grid.Column="1" Text="Çeviri: 0" Foreground="#00F0FF" FontSize="10" FontFamily="Consolas" FontWeight="Bold" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
                     </StackPanel>
                 </Border>
 
-                <!-- ── SAĞ PANEL: TERMINAL SON ÇEVİRİLER ── -->
-                <Border Grid.Column="2" BorderBrush="#00F0FF" BorderThickness="3" Background="{StaticResource BgCard}" Padding="18">
+                <!-- ── SAĞ PANEL: TERMİNAL ── -->
+                <Border Grid.Column="2" Background="#1A1523" BorderBrush="#00F0FF" BorderThickness="3" Padding="18,16">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/> <!-- Başlık -->
-                            <RowDefinition Height="*"/>    <!-- Terminal -->
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Başlık -->
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,14">
-                            <TextBlock x:Name="RecentTitle" Text="░▒▓ SON ÇEVİRİLER (TERMİNAL) ▓▒░" Foreground="{StaticResource AccentPink}" FontFamily="Consolas" FontSize="12" FontWeight="Bold"/>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                            <Border Background="#00F0FF" Width="3" Margin="0,0,8,0"/>
+                            <TextBlock x:Name="RecentTitle" Text="SON ÇEVİRİLER" Foreground="#FF007F" FontFamily="Consolas" FontSize="12" FontWeight="Bold"/>
                         </StackPanel>
 
-                        <!-- Akan Terminal Log Listesi -->
-                        <Border Grid.Row="1" Background="{StaticResource BgInput}" BorderBrush="#FF007F" BorderThickness="2" Padding="10">
+                        <Border Grid.Row="1" Background="#110E18" BorderBrush="#FF007F" BorderThickness="2" Padding="12">
                             <ScrollViewer x:Name="TerminalScroll" VerticalScrollBarVisibility="Auto">
-                                <TextBlock x:Name="TerminalLog" FontFamily="Consolas" FontSize="11" Foreground="#32CD32" TextWrapping="Wrap" LineHeight="16">
-                                    [SYSTEM] SYTEX L-Core Ultimate başlatıldı...&#x0a;[SYSTEM] Hazır! F10 tuşuyla otomatik çeviriyi açabilirsiniz.
+                                <TextBlock x:Name="TerminalLog" FontFamily="Consolas" FontSize="11" Foreground="#00FF66" TextWrapping="Wrap" LineHeight="18">
+[SYSTEM] SYTEX L-Core başlatıldı...&#x0a;[SYSTEM] Hazır. F10 ile çeviriyi başlatın.
                                 </TextBlock>
                             </ScrollViewer>
                         </Border>
@@ -294,24 +321,25 @@
                 </Border>
             </Grid>
 
-            <!-- ── ALT BİLGİ SEKMESİ ──────────────────────────────────────── -->
-            <Border Grid.Row="2" Background="{StaticResource BgCard}" BorderBrush="#00F0FF" BorderThickness="0,3,0,0" Padding="20,12" CornerRadius="0">
+            <!-- ══ ALT BAR ════════════════════════════════════════════════════ -->
+            <Border Grid.Row="2" Background="#1A1523" BorderBrush="#00F0FF" BorderThickness="0,2,0,0" Padding="20,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="StatusPrefixLabel" Text="👾 Durum: " Foreground="{StaticResource TextMuted}" FontSize="12" FontFamily="Consolas"/>
-                        <TextBlock x:Name="BottomStatusLabel" Text="Hazır (F10 ile başlatın)" Foreground="{StaticResource BorderCyan}" FontSize="12" FontFamily="Consolas" FontWeight="Bold"/>
+                        <Border Background="#FF007F" Width="3" Height="18" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="StatusPrefixLabel" Text="Durum: " Foreground="#B58B9D" FontSize="12" FontFamily="Consolas"/>
+                        <TextBlock x:Name="BottomStatusLabel" Text="Hazır (F10 ile başlatın)" Foreground="#00F0FF" FontSize="12" FontFamily="Consolas" FontWeight="Bold"/>
                     </StackPanel>
 
                     <!-- Dil Seçimi -->
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                        <ComboBox x:Name="SourceLangBox" Width="100" Margin="0,0,6,0"/>
-                        <TextBlock Text="→" Foreground="{StaticResource TextMuted}" VerticalAlignment="Center" Margin="2,0,8,0" FontWeight="Bold"/>
-                        <ComboBox x:Name="TargetLangBox" Width="100"/>
+                        <ComboBox x:Name="SourceLangBox" Width="105" Margin="0,0,6,0"/>
+                        <TextBlock Text="→" Foreground="#B58B9D" VerticalAlignment="Center" Margin="0,0,6,0" FontWeight="Bold" FontFamily="Consolas" FontSize="14"/>
+                        <ComboBox x:Name="TargetLangBox" Width="105"/>
                     </StackPanel>
                 </Grid>
             </Border>

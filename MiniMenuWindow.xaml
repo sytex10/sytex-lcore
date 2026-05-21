@@ -3,39 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Topmost="True" ShowInTaskbar="False"
-        Height="46" Width="240"
+        Height="52" Width="310"
         WindowStartupLocation="Manual" Left="20" Top="20"
         Title="SYTEX Mini Menu">
 
     <Window.Resources>
-        <!-- Siber & Pixel Art Retro Renkler -->
-        <SolidColorBrush x:Key="BgBrush" Color="#EE110E18"/> <!-- Yarı Şeffaf Tatlı Menekşe -->
-        <SolidColorBrush x:Key="BorderCyan" Color="#00F0FF"/> <!-- Piksel Siyan -->
-        <SolidColorBrush x:Key="GlowGreen" Color="#32CD32"/> <!-- Piksel Yeşil -->
-        <SolidColorBrush x:Key="GlowRed" Color="#FF007F"/> <!-- Piksel Pembe -->
-        <SolidColorBrush x:Key="TextMuted" Color="#9D8BB5"/>
+        <SolidColorBrush x:Key="BgBrush"    Color="#EE0E1118"/>
+        <SolidColorBrush x:Key="BorderCyan" Color="#00F0FF"/>
+        <SolidColorBrush x:Key="AccentPink" Color="#FF007F"/>
 
-        <!-- Mini Piksel Buton Stili -->
+        <!-- Mini İşlevsel Buton Stili (ikon + metin) -->
         <Style x:Key="MiniBtn" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#00F0FF"/>
+            <Setter Property="Foreground" Value="#B58B9D"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontFamily" Value="Consolas"/>
-            <Setter Property="Width" Value="32"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Margin" Value="4,0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="8,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="BtnBorder" Background="{TemplateBinding Background}" CornerRadius="0" BorderThickness="2" BorderBrush="Transparent">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                BorderBrush="#00F0FF" BorderThickness="0"
+                                Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="BtnBorder" Property="Background" Value="#FF007F"/>
-                                <Setter TargetName="BtnBorder" Property="BorderBrush" Value="#FF007F"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#FF007F"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -43,91 +38,120 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Kırmızı Kapat Butonu -->
+        <Style x:Key="CloseMiniBtnStyle" TargetType="Button" BasedOn="{StaticResource MiniBtn}">
+            <Setter Property="Foreground" Value="#FF0055"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
-    <!-- En dış siber piksel-glow çerçeve -->
     <Border Background="{StaticResource BgBrush}"
             BorderBrush="{StaticResource BorderCyan}"
-            BorderThickness="3"
-            CornerRadius="0"
+            BorderThickness="2"
             MouseDown="Border_MouseDown">
         <Border.Effect>
-            <DropShadowEffect Color="#00F0FF" BlurRadius="12" ShadowDepth="0" Opacity="0.5"/>
+            <DropShadowEffect Color="#00F0FF" BlurRadius="14" ShadowDepth="0" Opacity="0.5"/>
         </Border.Effect>
 
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="6,0">
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/> <!-- Drag Bar -->
+                <ColumnDefinition Width="Auto"/> <!-- Logo / Drag -->
                 <ColumnDefinition Width="*"/>    <!-- Butonlar -->
+                <ColumnDefinition Width="Auto"/> <!-- Sistem Butonları -->
             </Grid.ColumnDefinitions>
 
-            <!-- Sol tarafta mini siber çizgili tutma alanı (Drag Handle) -->
-            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,8,0" Cursor="SizeAll">
-                <Rectangle Width="2" Height="20" Fill="#00F5FF" Margin="1,0"/>
-                <Rectangle Width="2" Height="20" Fill="#00F5FF" Margin="1,0"/>
-            </StackPanel>
+            <!-- Sol: Logo + Drag Handle -->
+            <Border Grid.Column="0" Background="#1A1523" BorderBrush="#00F0FF" BorderThickness="0,0,2,0"
+                    Padding="8,0" Cursor="SizeAll" MouseDown="Border_MouseDown">
+                <TextBlock Text="SX" Foreground="#00F0FF" FontFamily="Consolas" FontSize="13"
+                           FontWeight="Bold" VerticalAlignment="Center"/>
+            </Border>
 
-            <!-- Kontrol Butonları -->
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                
-                <!-- [●] Otomatik Başlat / Durdur -->
-                <Button x:Name="AutoBtn" Click="AutoBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Otomatik Çeviri Aç/Kapa">
-                    <Grid>
-                        <!-- Glow Dot -->
-                        <Border x:Name="StatusDot" Width="10" Height="10" CornerRadius="5" Background="#FF0055" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!-- Orta: İşlevsel Butonlar -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+
+                <!-- Otomatik Çeviri Aç/Kapa (Durum Göstergesi ile) -->
+                <Button x:Name="AutoBtn" Click="AutoBtn_Click" Style="{StaticResource MiniBtn}"
+                        ToolTip="Otomatik Çeviriyi Aç / Kapa">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border x:Name="StatusDot" Width="8" Height="8" CornerRadius="4"
+                                Background="#FF0055" Margin="0,0,6,0" VerticalAlignment="Center">
                             <Border.Effect>
-                                <DropShadowEffect x:Name="DotGlow" Color="#FF0055" BlurRadius="6" ShadowDepth="0"/>
+                                <DropShadowEffect Color="#FF0055" BlurRadius="6" ShadowDepth="0"/>
                             </Border.Effect>
                         </Border>
-                    </Grid>
+                        <TextBlock Text="OTO" FontFamily="Consolas" FontSize="10" FontWeight="Bold"
+                                   Foreground="#00F0FF" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </Button>
 
-                <!-- [⛶] Manuel Alan Yakala -->
-                <Button Click="ManualBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Manuel Bölge Çevirisi (Kırpıcı)">
-                    <TextBlock Text="⛶" FontSize="15" FontWeight="Bold" Foreground="#00F5FF"/>
+                <!-- Dikey Ayraç -->
+                <Rectangle Width="1" Height="22" Fill="#2A2035" VerticalAlignment="Center" Margin="2,0"/>
+
+                <!-- Manuel Seçim (Kırpıcı) -->
+                <Button Click="ManualBtn_Click" Style="{StaticResource MiniBtn}"
+                        ToolTip="Manuel Bölge Seç (F9)">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="⛶" FontSize="13" Foreground="#00F0FF" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="SEÇ" FontFamily="Consolas" FontSize="10" FontWeight="Bold"
+                                   Foreground="#00F0FF" VerticalAlignment="Center"/>
+                    </StackPanel>
                 </Button>
 
-                <!-- [⚙] Ayarlar / Main Restore (Dönen Cyber Dişli Animasyonu) -->
-                <Button Click="SettingsBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Ayarlar &amp; Ana Kontrol Paneli">
-                    <TextBlock Text="⚙" FontSize="16" Foreground="#00F5FF" RenderTransformOrigin="0.5,0.5">
-                        <TextBlock.RenderTransform>
-                            <RotateTransform Angle="0"/>
-                        </TextBlock.RenderTransform>
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                        <DataTrigger.EnterActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:1" RepeatBehavior="Forever"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </DataTrigger.EnterActions>
-                                        <DataTrigger.ExitActions>
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0.2"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </DataTrigger.ExitActions>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                <!-- Dikey Ayraç -->
+                <Rectangle Width="1" Height="22" Fill="#2A2035" VerticalAlignment="Center" Margin="2,0"/>
+
+                <!-- Ayarlar -->
+                <Button Click="SettingsBtn_Click" Style="{StaticResource MiniBtn}"
+                        ToolTip="Ayarlar ve Ana Panel">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="⚙" FontSize="13" Foreground="#B58B9D" Margin="0,0,5,0" VerticalAlignment="Center">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:0.8" RepeatBehavior="Forever"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                            <TextBlock.RenderTransform>
+                                <RotateTransform Angle="0" CenterX="8" CenterY="8"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                        <TextBlock Text="AYAR" FontFamily="Consolas" FontSize="10" FontWeight="Bold"
+                                   Foreground="#B58B9D" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <!-- Sağ: Sistem Butonları -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Stretch"
+                        HorizontalAlignment="Right">
+                <Rectangle Width="1" Height="22" Fill="#2A2035" VerticalAlignment="Center" Margin="2,0"/>
+
+                <!-- Tray'e Küçült -->
+                <Button Click="TrayBtn_Click" Style="{StaticResource MiniBtn}"
+                        ToolTip="Arka Plana Al" Width="32" Padding="0">
+                    <TextBlock Text="🗕" FontSize="11" Foreground="#B58B9D" VerticalAlignment="Center"/>
                 </Button>
 
-                <!-- [🗕] Arka plana / Tray'e Küçült -->
-                <Button Click="TrayBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Tray'e Küçült">
-                    <TextBlock Text="🗕" FontSize="12" Foreground="#8A9BB5" FontWeight="Bold"/>
+                <!-- Kapat -->
+                <Button Click="CloseBtn_Click" Style="{StaticResource MiniBtn}"
+                        ToolTip="Tamamen Kapat" Width="32" Padding="0">
+                    <TextBlock Text="✕" FontSize="12" Foreground="#FF0055" FontWeight="Bold" VerticalAlignment="Center"/>
                 </Button>
-
-                <!-- [✕] Kapat -->
-                <Button Click="CloseBtn_Click" Style="{StaticResource MiniBtn}" ToolTip="Tamamen Kapat">
-                    <TextBlock Text="✕" FontSize="14" Foreground="#FF0055" FontWeight="Bold"/>
-                </Button>
-
             </StackPanel>
         </Grid>
     </Border>

@@ -60,16 +60,15 @@ public partial class MiniMenuWindow : Window
         _isActive = active;
         if (StatusDot == null) return;
 
-        if (active)
-        {
-            StatusDot.Background = new SolidColorBrush(Color.FromRgb(0, 255, 102)); // Neon Yeşil
-            if (DotGlow != null) DotGlow.Color = Color.FromRgb(0, 255, 102);
-        }
-        else
-        {
-            StatusDot.Background = new SolidColorBrush(Color.FromRgb(255, 0, 85)); // Neon Pembe/Kırmızı
-            if (DotGlow != null) DotGlow.Color = Color.FromRgb(255, 0, 85);
-        }
+        var activeColor = Color.FromRgb(0, 255, 102);   // Neon Yeşil
+        var inactiveColor = Color.FromRgb(255, 0, 85);  // Neon Kırmızı
+        
+        var color = active ? activeColor : inactiveColor;
+        StatusDot.Background = new SolidColorBrush(color);
+        
+        // DropShadowEffect'i doğrudan güncelle
+        if (StatusDot.Effect is DropShadowEffect glow)
+            glow.Color = color;
     }
 
     private void AutoBtn_Click(object sender, RoutedEventArgs e)
