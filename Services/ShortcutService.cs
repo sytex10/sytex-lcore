@@ -43,8 +43,11 @@ public sealed class ShortcutService : IDisposable
 
     private IntPtr SetHook(LowLevelKeyboardProc proc)
     {
-        // GetModuleHandle(null) geçerli EXE sürecinin (SYTEX-LCore.exe) handle değerini döner, bu da kancanın (hook) başarıyla kurulmasını sağlar!
-        return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(null), 0);
+        using (var curProcess = System.Diagnostics.Process.GetCurrentProcess())
+        using (var curModule = curProcess.MainModule)
+        {
+            return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+        }
     }
 
     public void RegisterShortcuts(uint manuel, uint auto, uint settings)

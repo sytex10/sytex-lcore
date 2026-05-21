@@ -447,7 +447,7 @@ public partial class MainWindow : Window
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
-                FileName = "https://github.com/sytex10/sytex-lcore/issues",
+                FileName = "https://sytex.com.tr/",
                 UseShellExecute = true
             });
             Log("[SYSTEM] Geri bildirim sayfası açıldı.");
@@ -457,11 +457,6 @@ public partial class MainWindow : Window
 
     private void BorderlessBtn_Click(object s, RoutedEventArgs e)
     {
-        if (_currentProfile?.ProcessName == null || _currentProfile.ProcessName == "manual" || _currentProfile.ProcessName == "Bekleniyor...")
-        {
-            Log("[WARNING] Çerçevesiz mod için önce bir oyunun algılanması gerekir!");
-            return;
-        }
 
         var res = BorderlessUtility.AutoForceBorderless();
         Log($"[BORDERLESS] {res}");
