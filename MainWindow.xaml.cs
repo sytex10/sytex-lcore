@@ -447,7 +447,7 @@ public partial class MainWindow : Window
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
-                FileName = "https://sytex.com.tr/",
+                FileName = "https://sytexlcore.vercel.app/",
                 UseShellExecute = true
             });
             Log("[SYSTEM] Geri bildirim sayfası açıldı.");
