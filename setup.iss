@@ -23,6 +23,7 @@ Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
 WizardImageFile=C:\Users\mamo1\.gemini\antigravity\scratch\SYTEX-LCore-CS\setup_banner.bmp
+WizardImageBackColor=$18110E
 WizardSmallImageFile=C:\Users\mamo1\.gemini\antigravity\scratch\SYTEX-LCore-CS\setup_logo.bmp
 SetupIconFile=C:\Users\mamo1\.gemini\antigravity\scratch\SYTEX-LCore-CS\Sytex L-Core Logo.ico
 PrivilegesRequired=lowest
@@ -70,6 +71,10 @@ begin
   WizardForm.Font.Name  := 'Consolas';
   WizardForm.Font.Size  := 9;
   WizardForm.MainPanel.Color := DARK_BG;
+
+  // Resimlerin arka planını karart
+  WizardForm.WizardBitmapImage.BackColor := DARK_BG;
+  WizardForm.WizardSmallBitmapImage.BackColor := DARK_BG;
 
   // Başlık yazıları
   WizardForm.PageNameLabel.Font.Color := NEON_CYAN;
