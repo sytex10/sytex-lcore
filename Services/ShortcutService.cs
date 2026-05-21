@@ -41,12 +41,20 @@ public sealed class ShortcutService : IDisposable
         _hookID = SetHook(_proc);
     }
 
+    [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    private static extern IntPtr LoadLibrary(string lpFileName);
+
     private IntPtr SetHook(LowLevelKeyboardProc proc)
     {
         using (var curProcess = System.Diagnostics.Process.GetCurrentProcess())
         using (var curModule = curProcess.MainModule)
         {
-            return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+            IntPtr hModule = GetModuleHandle(curModule.ModuleName);
+            if (hModule == IntPtr.Zero && curModule.FileName != null)
+            {
+                hModule = LoadLibrary(curModule.FileName);
+            }
+            return SetWindowsHookEx(WH_KEYBOARD_LL, proc, hModule, 0);
         }
     }
 

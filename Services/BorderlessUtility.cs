@@ -49,7 +49,8 @@ public static class BorderlessUtility
             if (string.IsNullOrWhiteSpace(title)) return true;
             
             // Programın kendini ve sistem uygulamalarını es geç
-            if (title == "SYTEX L-Core" || title == "Program Manager" || title == "Settings" || title == "Ayarlar")
+            string lowerTitle = title.ToLower();
+            if (lowerTitle.Contains("sytex") || lowerTitle == "program manager" || lowerTitle == "settings" || lowerTitle == "ayarlar")
                 return true;
 
             GetWindowThreadProcessId(hWnd, out uint processId);
@@ -60,7 +61,10 @@ public static class BorderlessUtility
                 if (procName == "explorer" || procName == "chrome" || procName == "msedge" || procName == "discord" || procName == "devenv")
                     return true;
             }
-            catch { return true; }
+            catch 
+            { 
+                // Erişim reddedildi (oyun yönetici olabilir). İsim filtresini atla ama pencereyi oyun olarak değerlendir.
+            }
 
             // Pencere boyutu çok küçükse oyun değildir (Genişlik 800, Yükseklik 600'den büyük olmalı)
             if (GetWindowRect(hWnd, out RECT rect))
