@@ -12,6 +12,7 @@
 AppId={{D3F75D27-FF4C-4061-B9D4-098FEE6ACFF7}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={localappdata}\Programs\{#MyAppName}
 DefaultGroupName={#MyAppName}
@@ -109,8 +110,14 @@ begin
   WizardForm.Color := DARK_BG;
   WizardForm.InnerPage.Color := DARK_BG;
   
+  if CurPageID = wpWelcome then
+  begin
+    WizardForm.WelcomePage.Color := DARK_BG;
+  end;
+
   if CurPageID = wpFinished then
   begin
+    WizardForm.FinishedPage.Color := DARK_BG;
     WizardForm.FinishedHeadingLabel.Font.Color := NEON_CYAN;
     WizardForm.FinishedLabel.Font.Color := TEXT_WHITE;
     WizardForm.RunList.Color := DARK_BG;
