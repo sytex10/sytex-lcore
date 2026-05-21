@@ -84,8 +84,10 @@ begin
   WizardForm.PageDescriptionLabel.Font.Color := TEXT_MUTED;
   WizardForm.PageDescriptionLabel.Font.Name  := 'Consolas';
 
-  // İç sayfa
+  // İç sayfalar ve Ana Sayfalar
   WizardForm.InnerPage.Color := DARK_BG;
+  WizardForm.WelcomePage.Color := DARK_BG;
+  WizardForm.FinishedPage.Color := DARK_BG;
 
   // Butonlar
   StyleBtn(WizardForm.NextButton);
