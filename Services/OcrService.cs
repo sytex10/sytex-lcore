@@ -212,25 +212,7 @@ public sealed class OcrService : IDisposable
             using var processedMat = new Mat();
             Bitmap processedBmp;
             
-            if (!isDefaultScan)
-            {
-                // Manuel seçim için: Ham gri tonlamalı 2x büyütülmüş resmi kullan.
-                // Windows OCR bu şekilde harika okur çünkü yapay kontrast germe yazıyı bozabilir.
-                processedBmp = BitmapConverter.ToBitmap(resized);
-            }
-            else
-            {
-                // Otomatik altyazı modu için: Kontrast germe uygula.
-                using var floatMat = new Mat();
-                resized.ConvertTo(floatMat, MatType.CV_32F);
-                
-                using var temp = floatMat - new Scalar(110.0);
-                using var stretchedExpr = temp * (255.0 / 145.0);
-                using var stretched = stretchedExpr.ToMat();
-                
-                stretched.ConvertTo(processedMat, MatType.CV_8U);
-                processedBmp = BitmapConverter.ToBitmap(processedMat);
-            }
+            processedBmp = BitmapConverter.ToBitmap(resized);
             
             using var ms = new MemoryStream();
             using (processedBmp)
