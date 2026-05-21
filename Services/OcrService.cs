@@ -74,9 +74,11 @@ public sealed class OcrService : IDisposable
         // Bu sayede can barı, minimap, menü yazıları gibi "garip garip şeyler" çevrilmez.
         if (scanRegion == null)
         {
-            int sw = GetSystemMetrics(0);
-            int sh = GetSystemMetrics(1);
-            scanRegion = new WpfRect(sw * 0.15, sh * 0.70, sw * 0.70, sh * 0.22);
+            double dpiX = 1.0, dpiY = 1.0;
+            try { using var g = Graphics.FromHwnd(IntPtr.Zero); dpiX = g.DpiX / 96.0; dpiY = g.DpiY / 96.0; } catch {}
+            double logicalW = GetSystemMetrics(0) / dpiX;
+            double logicalH = GetSystemMetrics(1) / dpiY;
+            scanRegion = new WpfRect(logicalW * 0.20, logicalH * 0.75, logicalW * 0.60, logicalH * 0.20);
         }
 
         var list = await Task.Run(async () =>
@@ -395,17 +397,20 @@ public sealed class OcrService : IDisposable
     {
         if (blocks.Count == 0) return blocks;
 
-        int sw = GetSystemMetrics(0);
-        int sh = GetSystemMetrics(1);
+        double dpiX = 1.0, dpiY = 1.0;
+        try { using var g = Graphics.FromHwnd(IntPtr.Zero); dpiX = g.DpiX / 96.0; dpiY = g.DpiY / 96.0; } catch {}
+        
+        double logicalW = GetSystemMetrics(0) / dpiX;
+        double logicalH = GetSystemMetrics(1) / dpiY;
 
         // Altyazı kriterleri:
-        // 1. Ekranın yatay merkezine yakın olmalı (merkezi sw * 0.15 ile sw * 0.85 arasında)
-        // 2. Çok kısa kelimeler dahil (karakter sayısı > 2, örn: "Yes", "No", "Run")
-        // 3. Ekranın alt yarısında olmalı (Y > sh * 0.40, pencere modları ve siyah barlar için çok güvenli)
+        // 1. Ekranın yatay merkezine yakın olmalı
+        // 2. Çok kısa kelimeler dahil
+        // 3. Ekranın alt yarısında olmalı
         var potentialSubtitles = blocks.Where(b => 
-            b.Rect.X + b.Rect.Width / 2.0 > sw * 0.15 && 
-            b.Rect.X + b.Rect.Width / 2.0 < sw * 0.85 && 
-            b.Rect.Y > sh * 0.40 &&
+            b.Rect.X + b.Rect.Width / 2.0 > logicalW * 0.20 && 
+            b.Rect.X + b.Rect.Width / 2.0 < logicalW * 0.80 && 
+            b.Rect.Y > logicalH * 0.60 &&
             b.Text.Length > 2
         ).ToList();
 
