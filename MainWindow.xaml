@@ -273,10 +273,18 @@
                         </Button>
 
                         <!-- Ayarlar -->
-                        <Button Click="OpenSettings_Click" Style="{StaticResource CyberBtn}" Margin="0,0,0,14">
+                        <Button Click="OpenSettings_Click" Style="{StaticResource CyberBtn}" Margin="0,0,0,8">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="⚙  " VerticalAlignment="Center"/>
                                 <TextBlock x:Name="SettingsBtnLabel" Text="Gelişmiş Ayarlar" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Geri Bildirim / Hata Bildir -->
+                        <Button Click="FeedbackBtn_Click" Style="{StaticResource CyberBtn}" Margin="0,0,0,14" Background="#2B1A22" BorderBrush="#FF007F">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🐞  " Foreground="#FF007F" VerticalAlignment="Center"/>
+                                <TextBlock Text="Hata / Geri Bildirim" Foreground="#FF007F" FontWeight="Bold" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
 

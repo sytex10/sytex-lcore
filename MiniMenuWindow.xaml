@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None" AllowsTransparency="True" Background="Transparent"
         Topmost="True" ShowInTaskbar="False"
-        Height="52" Width="310"
+        Height="52" Width="400"
         WindowStartupLocation="Manual" Left="20" Top="20"
         Title="SYTEX Mini Menu">
 
@@ -131,6 +131,19 @@
                             </TextBlock.RenderTransform>
                         </TextBlock>
                         <TextBlock Text="AYAR" FontFamily="Consolas" FontSize="10" FontWeight="Bold"
+                                   Foreground="#B58B9D" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Dikey Ayraç -->
+                <Rectangle Width="1" Height="22" Fill="#2A2035" VerticalAlignment="Center" Margin="2,0"/>
+
+                <!-- Borderless Zorla -->
+                <Button Click="BorderlessBtn_Click" Style="{StaticResource MiniBtn}"
+                        ToolTip="Oyunu Tam Ekran Çerçevesiz (Borderless) Yap">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="🖥" FontSize="13" Foreground="#B58B9D" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="PENCERESİZ" FontFamily="Consolas" FontSize="10" FontWeight="Bold"
                                    Foreground="#B58B9D" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>

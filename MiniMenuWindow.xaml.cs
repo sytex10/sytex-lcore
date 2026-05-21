@@ -14,6 +14,7 @@ public partial class MiniMenuWindow : Window
     public event Action? OnToggleAuto;
     public event Action? OnManualScan;
     public event Action? OnOpenSettings;
+    public event Action? OnForceBorderless;
     public event Action? OnMinimizeToTray;
     public event Action? OnFullClose;
 
@@ -84,6 +85,11 @@ public partial class MiniMenuWindow : Window
     private void SettingsBtn_Click(object sender, RoutedEventArgs e)
     {
         OnOpenSettings?.Invoke();
+    }
+
+    private void BorderlessBtn_Click(object sender, RoutedEventArgs e)
+    {
+        OnForceBorderless?.Invoke();
     }
 
     private void TrayBtn_Click(object sender, RoutedEventArgs e)

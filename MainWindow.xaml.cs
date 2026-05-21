@@ -365,6 +365,7 @@ public partial class MainWindow : Window
         _miniMenu.OnToggleAuto += () => Dispatcher.Invoke(ToggleAutoTranslation);
         _miniMenu.OnManualScan += () => Dispatcher.Invoke(TriggerManualScan);
         _miniMenu.OnOpenSettings += () => Dispatcher.Invoke(ShowSettingsWindow);
+        _miniMenu.OnForceBorderless += () => Dispatcher.Invoke(() => BorderlessBtn_Click(null, null));
         _miniMenu.OnMinimizeToTray += () => Dispatcher.Invoke(MinimizeToTray);
         _miniMenu.OnFullClose += () => Dispatcher.Invoke(ExitApplication);
     }
@@ -435,7 +436,24 @@ public partial class MainWindow : Window
 
     private void StartBtn_Click(object s, RoutedEventArgs e) => ToggleAutoTranslation();
 
-    private void OpenSettings_Click(object s, RoutedEventArgs e) => ShowSettingsWindow();
+    private void OpenSettings_Click(object sender, RoutedEventArgs e)
+    {
+        ShowSettingsWindow();
+    }
+
+    private void FeedbackBtn_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://github.com/sytex10/sytex-lcore/issues",
+                UseShellExecute = true
+            });
+            Log("[SYSTEM] Geri bildirim sayfası açıldı.");
+        }
+        catch { }
+    }
 
     private void BorderlessBtn_Click(object s, RoutedEventArgs e)
     {
@@ -587,7 +605,6 @@ public partial class MainWindow : Window
         bool isEn = Loc.Current == AppLanguage.English;
 
         LangToggleBtn.Content = isEn ? "🌐 EN" : "🌐 TR";
-        TitleLabel.Text = Loc.Title;
         ControlPanelLabel.Text = Loc.ControlPanel;
         DetectedGameLabel.Text = Loc.DetectedGame;
         StartBtnLabel.Text = _overlay != null ? Loc.StopBtn : Loc.StartBtn;
