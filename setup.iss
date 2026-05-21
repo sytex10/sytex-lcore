@@ -65,9 +65,6 @@ end;
 procedure InitializeWizard;
 begin
   WizardForm.Color      := DARK_BG;
-  WizardForm.OuterNotebook.Color := DARK_BG;
-  WizardForm.InnerNotebook.Color := DARK_BG;
-  
   WizardForm.Font.Color := TEXT_WHITE;
   WizardForm.Font.Name  := 'Consolas';
   WizardForm.Font.Size  := 9;
@@ -102,35 +99,13 @@ begin
   WizardForm.ReadyMemo.Color      := DARK_CARD;
   WizardForm.ReadyMemo.Font.Color := NEON_CYAN;
   WizardForm.ReadyMemo.Font.Name  := 'Consolas';
-
-  WizardForm.WelcomePage.Color := DARK_BG;
-  WizardForm.FinishedPage.Color := DARK_BG;
-  
-  WizardForm.WelcomeLabel1.Font.Color := NEON_CYAN;
-  WizardForm.WelcomeLabel2.Font.Color := TEXT_WHITE;
-  
-  WizardForm.FinishedHeadingLabel.Font.Color := NEON_CYAN;
-  WizardForm.FinishedLabel.Font.Color := TEXT_WHITE;
-
-  WizardForm.RunList.Color := DARK_BG;
-  WizardForm.RunList.Font.Color := TEXT_WHITE;
-  
-  WizardForm.TasksList.Color := DARK_BG;
-  WizardForm.TasksList.Font.Color := TEXT_WHITE;
 end;
 
 procedure CurPageChanged(CurPageID: Integer);
 begin
-  if CurPageID = wpWelcome then
-  begin
-    WizardForm.WelcomePage.Color := DARK_BG;
-    WizardForm.WelcomeLabel1.Font.Color := NEON_CYAN;
-    WizardForm.WelcomeLabel2.Font.Color := TEXT_WHITE;
-  end;
-  
   if CurPageID = wpFinished then
   begin
-    WizardForm.FinishedPage.Color := DARK_BG;
+    WizardForm.Color := DARK_BG;
     WizardForm.FinishedHeadingLabel.Font.Color := NEON_CYAN;
     WizardForm.FinishedLabel.Font.Color := TEXT_WHITE;
     WizardForm.RunList.Color := DARK_BG;
