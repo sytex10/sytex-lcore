@@ -99,4 +99,10 @@ begin
   WizardForm.ReadyMemo.Color      := DARK_CARD;
   WizardForm.ReadyMemo.Font.Color := NEON_CYAN;
   WizardForm.ReadyMemo.Font.Name  := 'Consolas';
+
+  WizardForm.WelcomePage.Color := DARK_BG;
+  WizardForm.FinishedPage.Color := DARK_BG;
+  
+  WizardForm.FinishedHeadingLabel.Font.Color := NEON_CYAN;
+  WizardForm.FinishedLabel.Font.Color := TEXT_WHITE;
 end;
