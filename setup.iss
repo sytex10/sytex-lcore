@@ -25,7 +25,7 @@ WizardImageFile=C:\Users\mamo1\.gemini\antigravity\scratch\SYTEX-LCore-CS\setup_
 WizardSmallImageFile=C:\Users\mamo1\.gemini\antigravity\scratch\SYTEX-LCore-CS\setup_logo.bmp
 SetupIconFile=C:\Users\mamo1\.gemini\antigravity\scratch\SYTEX-LCore-CS\Sytex L-Core Logo.ico
 PrivilegesRequired=lowest
-ShowLanguageDialog=no
+ShowLanguageDialog=yes
 
 [Languages]
 Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
@@ -65,6 +65,9 @@ end;
 procedure InitializeWizard;
 begin
   WizardForm.Color      := DARK_BG;
+  WizardForm.OuterNotebook.Color := DARK_BG;
+  WizardForm.InnerNotebook.Color := DARK_BG;
+  
   WizardForm.Font.Color := TEXT_WHITE;
   WizardForm.Font.Name  := 'Consolas';
   WizardForm.Font.Size  := 9;
@@ -102,6 +105,9 @@ begin
 
   WizardForm.WelcomePage.Color := DARK_BG;
   WizardForm.FinishedPage.Color := DARK_BG;
+  
+  WizardForm.WelcomeLabel1.Font.Color := NEON_CYAN;
+  WizardForm.WelcomeLabel2.Font.Color := TEXT_WHITE;
   
   WizardForm.FinishedHeadingLabel.Font.Color := NEON_CYAN;
   WizardForm.FinishedLabel.Font.Color := TEXT_WHITE;
